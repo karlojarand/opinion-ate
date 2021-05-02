@@ -2,10 +2,25 @@
 +import {RestaurantList} from '../RestaurantList';
 
 describe('RestaurantList', () => {
+      const restaurants = [
+            {id: 1, name: 'Sushi Place'},
+            {id: 2, name: 'Pizza Place'},
+          ];
+          let loadRestaurants;
+          let context;
+        
+          beforeEach(() => {
+            loadRestaurants = jest.fn().mockName('loadRestaurants');
+        
+            context = render(
+              <RestaurantList
+               loadRestaurants={loadRestaurants}
+                restaurants={restaurants}
+              />,
+            );
+          });
+        
     it('loads restaurants on first render', () => {
-        const loadRestaurants = jest.fn().mockName('loadRestaurants');
-
-        render(<RestaurantList loadRestaurants={loadRestaurants} />);
 
         expect(loadRestaurants).toHaveBeenCalled();
     });
