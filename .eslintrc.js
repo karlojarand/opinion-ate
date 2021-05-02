@@ -1,19 +1,19 @@
 module.exports = {
-    extends: ['react-app', 'prettier'],
-    plugins: ['prettier', 'jest', 'cypress'],
-    "parser": "babel-eslint",
-    env: {
-      browser: true,
-      'cypress/globals': true,
-      es6: true,
-      'jest/globals': true,
+    "env": {
+        "browser": true,
+        "es2021": true
     },
-    settings: {
-      react: {
-        version: 'detect',
-      },
+    "extends": "plugin:react/recommended",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 12,
+        "sourceType": "module"
     },
-    rules: {
-      'prettier/prettier': 'warn',
-    },
-  };
+    "plugins": [
+        "react"
+    ],
+    "rules": {
+    }
+};
