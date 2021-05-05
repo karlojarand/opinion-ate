@@ -1,10 +1,16 @@
+import React from 'react';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
 import RestaurantList from './RestaurantList';
+import NewRestaurantForm from './NewRestaurantForm';
 
-const RestaurantScreen = () => (
-    <div>
-      <h1>Restaurants</h1>
+export const RestaurantScreen = () => (
+  <Card>
+    <CardContent>
+      <Typography variant="h5">Restaurants</Typography>
+      <NewRestaurantForm />
       <RestaurantList />
-    </div>
-  );
-  
-  export default RestaurantScreen;
+    </CardContent>
+  </Card>
+);
