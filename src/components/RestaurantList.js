@@ -1,39 +1,45 @@
-import {useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {loadRestaurants} from '../store/restaurants/actions';
-export const RestaurantList = () => {
-export const RestaurantList = ({loadRestaurants, restaurants}) => {
-    
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Alert from '@material-ui/lab/Alert';
+
+export const RestaurantList = ({
+  loadRestaurants,
+  restaurants,
+  loading,
+  loadError,
+}) => {
   useEffect(() => {
     loadRestaurants();
   }, [loadRestaurants]);
 
   return (
-       <ul>
-          {restaurants.map(restaurant => (
-            <li key={restaurant.id}>{restaurant.name}</li>
-          ))}
-        </ul>
-      );
- };
- const mapStateToProps = state => ({
-      restaurants: state.restaurants.records,
-    });
+    <>
+      {loading && <CircularProgress data-testid="loading-indicator" />}
+      {loadError && (
+        <Alert severity="error">Restaurants could not be loaded.</Alert>
+      )}
+      <List>
+        {restaurants.map(restaurant => (
+          <ListItem key={restaurant.id}>
+            <ListItemText>{restaurant.name}</ListItemText>
+          </ListItem>
+        ))}
+      </List>
+    </>
+  );
+};
 
-    const mapDispatchToProps = {loadRestaurants};
+const mapStateToProps = state => ({
+  restaurants: state.restaurants.records,
+  loading: state.restaurants.loading,
+  loadError: state.restaurants.loadError,
+});
 
- it('displays the restaurants', () => {
-    const noop = () => {};
-    const restaurants = [
-      {id: 1, name: 'Sushi Place'},
-      {id: 2, name: 'Pizza Place'},
-    ];
-  
-    const {queryByText} = render(
-      <RestaurantList loadRestaurants={noop} restaurants={restaurants} />,
-    );
+const mapDispatchToProps = {loadRestaurants};
 
-    expect(queryByText('Sushi Place')).not.toBeNull();
- expect(queryByText('Pizza Place')).not.toBeNull();
-  });
 export default connect(mapStateToProps, mapDispatchToProps)(RestaurantList);
